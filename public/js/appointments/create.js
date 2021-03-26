@@ -14,7 +14,7 @@ $(function(){
 
   $specialty.change(() => {
   const specialtyId = $specialty.val();
-  const url = `/specialties/${specialtyId}/doctors`;
+  const url = `/api/specialties/${specialtyId}/doctors`;
   $.getJSON(url, onDoctorsLoaded);
   });
 
@@ -35,13 +35,13 @@ $(function(){
   function loadHours() {
     const selectedDate = $date.val();
     const doctorId = $doctor.val();
-    const url = `/shedule/hours?date=${selectedDate}&doctor_id=${doctorId}`;
+    const url = `/api/shedule/hours?date=${selectedDate}&doctor_id=${doctorId}`;
     $.getJSON(url,displayHours);
   }
 
   function displayHours(data) {
 
-    if(!data.morning && !data.afternoon) {
+    if(!data.morning && !data.afternoon || data.morning.length==0 && data.afternoon.length==0) {
          
         $hours.html(noHoursAlert);
         return

@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\User;
 class Specialty extends Model
 {
      
@@ -14,6 +14,6 @@ class Specialty extends Model
 
     public function users(){
 
-        return $this->belongsToMany(user::class)->withTimesTamps();
+        return $this->belongsToMany(User::class)->withTimesTamps();
     }
 }

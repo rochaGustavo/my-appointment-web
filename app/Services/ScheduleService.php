@@ -1,4 +1,4 @@
-<?php namespace App\services;
+<?php namespace App\Services;
 
 use App\Interfaces\ScheduleServiceInterface;
 use Carbon\Carbon;
@@ -28,19 +28,22 @@ class ScheduleService implements ScheduleServiceInterface
         ]);
         // dd($workDay->toArray());
 
-        if(!$workDay) {
-        return [];
-        }
+        if($workDay) {
+            $morningIntervals = $this->getIntervals(
+                $workDay->morning_start,$workDay->morning_end,
+                $date, $doctorId
+                );
+                $afternoon_intervals = $this->getIntervals(
+                $workDay->afternoon_start,$workDay->afternoon_end,
+                $date, $doctorId
+                ); 
+        } else {
+               $morningIntervals = [];
+                $afternoon_intervals = [];
+            }
 
 
-        $morningIntervals = $this->getIntervals(
-        $workDay->morning_start,$workDay->morning_end,
-        $date, $doctorId
-        );
-        $afternoon_intervals = $this->getIntervals(
-        $workDay->afternoon_start,$workDay->afternoon_end,
-        $date, $doctorId
-        );
+    
         $data = [];
         $data['morning'] = $morningIntervals;
         $data['afternoon'] = $afternoon_intervals;

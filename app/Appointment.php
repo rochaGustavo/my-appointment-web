@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use App\CancelledAppointment;
+use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 
@@ -20,10 +21,19 @@ class Appointment extends Model
             'type'
     ];
 
+    protected $hidden = [
+            'specialty_id',
+            'doctor_id'
+    ];
+
+    protected $appends = [
+      //  'shceduled_time_12'
+    ];
+
     // N $appointment->specialty 1
     public function specialty()
     {
-        return $this->belongsTo(specialty::class);
+        return $this->belongsTo(Specialty::class);
     }
 
     // N $appointment->doctor 1
@@ -53,6 +63,23 @@ class Appointment extends Model
     {
         return (new Carbon($this->scheduled_time))
                 ->format('g:i A');
+    }
+
+    static public function createForPatient(Request $request, $patientId){
+        $data = $request->only([
+            'description',
+            'specialty_id',
+            'doctor_id',
+            'scheduled_date',
+            'scheduled_time',
+            'type'
+    ]);
+    $data['patient_id'] = $patientId;
+    // right time format
+    $carbonTime =   Carbon::createFromFormat('g:i A', $data['scheduled_time']);
+    $data['scheduled_time'] = $carbonTime->format('H:i:s');
+
+        return self::create($data);
     }
 
 }

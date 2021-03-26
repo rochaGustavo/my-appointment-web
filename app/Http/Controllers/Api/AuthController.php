@@ -16,13 +16,13 @@ class AuthController extends Controller
         if(Auth::guard('api')->attempt($credentials)) {
             $user = Auth::guard('api')->user();
             $jwt = JwtAuth::generateToken($user);
-            $success = false;
+            $success = true;
            // $data = compact('user','jwt');
             
             return compact('success','user','jwt');
 
         } else {
-                $success = true;
+                $success = false;
                 $message = 'Invalid credentials';
 
                 return compact('success','message');

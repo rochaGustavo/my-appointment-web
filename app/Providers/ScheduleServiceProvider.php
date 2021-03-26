@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 
 use App\Interfaces\ScheduleServiceInterface;
-use App\services\ScheduleService;
+use App\Services\ScheduleService;
 
 class ScheduleServiceProvider extends ServiceProvider
 {
