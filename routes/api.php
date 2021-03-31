@@ -2,6 +2,7 @@
 
 
 Route::post('/login', 'AuthController@login');
+Route::post('/register', 'AuthController@register');
 
 //JSON
 Route::get('/specialties', 'SpecialtyController@index');
@@ -16,7 +17,7 @@ Route::middleware('auth:api')->group(function () {
     // appointments
 
     Route::get('/appointments', 'AppointmentController@index');
-    Route::post('/appointments', 'Appointmentcontroller@store');
+    Route::post('/appointments', 'AppointmentController@store');
     
 
 });
