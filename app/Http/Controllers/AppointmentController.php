@@ -163,7 +163,9 @@ class AppointmentController extends Controller
 
         }
         $appointment->status = 'Cancelado';
-        $appointment->save(); //update
+        $saved = $appointment->save(); //update
+        if($saved)
+        $appointment->patient->sendFCM('Su cita ah sido cancelada.');
 
         $notification =  'La cita se ah cancelado correctamente.';   
         return  redirect('/appointments')->with(compact('notification'));
@@ -172,7 +174,10 @@ class AppointmentController extends Controller
     public function postConfirm(Appointment $appointment)
     {
         $appointment->status = 'Confirmada';
-        $appointment->save(); //update
+        $saved = $appointment->save(); //update
+
+        if($saved)
+        $appointment->patient->sendFCM('Su cita se ha confirmado!');
 
         $notification =  'La cita se ah confirmado correctamente.';   
         return  redirect('/appointments')->with(compact('notification'));
